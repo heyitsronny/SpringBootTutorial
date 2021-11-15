@@ -2,15 +2,35 @@ package com.amigoscode.springboottutorial.student;
 
 import java.time.LocalDate;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+
+@Entity
+@Table
 public class Student {
 
-    private Integer id;
+    @Id
+    @SequenceGenerator(
+            name = "student_sequence",
+            sequenceName = "student_sequence",
+            allocationSize= 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "student_sequence"
+    )
+    private Long id;
     private String name;
     private String email;
     private LocalDate dob;
     private int age;
 
-    public Student(Integer id, String name, String email, LocalDate dob, int age) {
+    public Student(Long id, String name, String email, LocalDate dob, int age) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -25,11 +45,15 @@ public class Student {
         this.age = age;
     }
 
-    public Integer getId() {
+    public Student() {
+
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
