@@ -2,9 +2,11 @@ package com.amigoscode.springboottutorial.student;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,7 +24,12 @@ public class StudentService {
     private final StudentRepository studentRepository;
 
     public List<Student> getStudents() {
-        return studentRepository.findAll();
+        Comparator<Student> comparator = Comparator.comparing(
+                Student::getId, Long::compareTo
+        );
+        return studentRepository.findAll().stream()
+                .sorted(comparator)
+                .collect(Collectors.toList());
     }
 
     public void addNewStudent(Student student) {
