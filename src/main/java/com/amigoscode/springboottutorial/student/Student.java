@@ -12,41 +12,56 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.ToString;
+
+
 @Entity
 @Table
+// lombok:
+@ToString
+@NoArgsConstructor // will also set non-null fields to null/0/false
+@RequiredArgsConstructor //only non-null fields
+@AllArgsConstructor
 public class Student {
 
     @Id
-    @SequenceGenerator(
-            name = "student_sequence",
-            sequenceName = "student_sequence",
-            allocationSize= 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "student_sequence"
-    )
+    @SequenceGenerator(name = "student_sequence", sequenceName = "student_sequence", allocationSize= 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "student_sequence")
     private Long id;
+    @NonNull
     private String name;
+    @NonNull
     private String email;
+    @NonNull
     private LocalDate dob;
     @Transient
     private int age;
 
+    /*
     public Student() {}
+     */
 
+    /*
     public Student(Long id, String name, String email, LocalDate dob) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.dob = dob;
     }
+     */
 
+    /*
     public Student(String name, String email, LocalDate dob) {
         this.name = name;
         this.email = email;
         this.dob = dob;
     }
+
+     */
 
     public Long getId() {
         return id;
@@ -88,14 +103,4 @@ public class Student {
         this.age = age;
     }
 
-    @Override
-    public String toString() {
-        return "Student{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", dob=" + dob +
-                ", age=" + age +
-                '}';
-    }
 }
